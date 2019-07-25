@@ -18,8 +18,12 @@ public class Lines : MonoBehaviour
 
     private void Update()
     {
-        pos[0] = transform.position;
-        pos[1] = _player.position;
-        _lineRenderer.SetPositions(pos);
+        if (_player)
+        {
+            pos[0] = transform.position;
+            pos[1] = _player.position;
+            _lineRenderer.SetPositions(pos);
+        }
+        
     }
 }

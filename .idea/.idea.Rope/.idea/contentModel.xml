@@ -6,13 +6,16 @@
     <e p="D:\Unity\Rope\Rope" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Block.cs" t="Include" />
-        <e p="CameraMover.cs" t="Include" />
-        <e p="Score.cs" t="Include" />
         <e p="Scripts" t="Include">
+          <e p="Block.cs" t="Include" />
+          <e p="CameraMover.cs" t="Include" />
+          <e p="Generator.cs" t="Include" />
           <e p="Lines.cs" t="Include" />
+          <e p="MadBlock.cs" t="Include" />
           <e p="Player.cs" t="Include" />
+          <e p="RestartButton.cs" t="Include" />
           <e p="Rope.cs" t="Include" />
+          <e p="Score.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />

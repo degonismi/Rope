@@ -11,11 +11,15 @@ public class CameraMover : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.y-3  < _player.position.y)
+        if (_player)
         {
-            pos = new Vector3(0, _player.position.y +3, -10);
-            transform.position = Vector3.Lerp(transform.position, pos, 3 * Time.deltaTime);
+            if (transform.position.y-3  < _player.position.y)
+            {
+                pos = new Vector3(0, _player.position.y +3, -10);
+                transform.position = Vector3.Lerp(transform.position, pos, 3 * Time.deltaTime);
+            }
         }
+        
            
     }
 }
