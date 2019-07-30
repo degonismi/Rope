@@ -6,6 +6,9 @@
     <e p="D:\Unity\Rope\Rope" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="BestScore.cs" t="Include" />
+        <e p="InputPanelScr.cs" t="Include" />
+        <e p="MenuUI.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="Block.cs" t="Include" />
           <e p="CameraMover.cs" t="Include" />

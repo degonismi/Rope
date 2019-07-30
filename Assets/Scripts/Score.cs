@@ -27,4 +27,13 @@ public class Score : MonoBehaviour
         }
         _text.text = _score.ToString();
     }
+
+    private void OnDisable()
+    {
+        int max = PlayerPrefs.GetInt("BestScore",0);
+        if(max<_score)
+        PlayerPrefs.SetInt("BestScore", _score);
+        
+        PlayerPrefs.SetInt("CurrentScore", _score);
+    }
 }

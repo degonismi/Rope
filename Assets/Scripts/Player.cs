@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float RopeSpeed;
     
     private Vector3 _targetPos;
+    private Vector3 _endPos;
     private Rigidbody2D _rb;
 
     private int _color;
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     public bool CanShoot;
 
     public GameObject Part;
+    public GameObject Target;
     
     public UnityEvent OnDead;
     
@@ -29,18 +31,25 @@ public class Player : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         IsRun = true;
+        
     }
 
     private void Update()
     {
-        if (IsRun)
+         if (IsRun)
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                _targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);;
+                _targetPos.z = 0;
+                Target.transform.position = _targetPos;
+                Target.SetActive(true);
+            }
+            
             if (Input.GetMouseButton(0))
             {
-                //if (!Part)
-               // {
                     Part.SetActive(true);
-               //}
+               
                 SetTarget(Input.mousePosition);
             }
 
@@ -48,6 +57,7 @@ public class Player : MonoBehaviour
             {
                 Part.SetActive(false);
                 Shoot();    
+                Target.SetActive(false);
             }
         }
         
@@ -55,27 +65,44 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
+        Handheld.Vibrate();
         OnDead?.Invoke();
     }
 
+    public void SetStartPose(Vector3 pos)
+    {
+        if (IsRun)
+        {
+            _targetPos = pos;
+            _targetPos.z = 0;
+            Target.transform.position = _targetPos;
+            Target.SetActive(true);
+            Part.SetActive(true);
+        }
+        
+    }
+    
     public void SetTarget(Vector3 pos)
     {
         if (!CanJump)
         {
+            //pos.z = 0;
             pos = Camera.main.ScreenToWorldPoint(pos);
             pos.z = 0;
-            _targetPos = pos;
+            _endPos = pos;
         
-            Vector3 diff = pos - transform.position;
+            Vector3 diff = pos - _targetPos;
             diff.Normalize();
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z + 90);
         }
-       
     }
+    
+    
 
     public void Shoot()
     {
+        Target.SetActive(false);
         Rope.transform.position = transform.position;
         CanJump = true;
         Rope.GetComponent<Rope>().IsActivated = true;
@@ -105,7 +132,6 @@ public class Player : MonoBehaviour
         while (!IsRun && transform.position.y < pos.y)
         {
             Rope.transform.parent = null;
-           //transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * 3 );
            _rb.AddForce((pos - transform.position).normalized * 3, ForceMode2D.Force);
            yield return null ;
         }
@@ -114,7 +140,6 @@ public class Player : MonoBehaviour
         Rope.transform.parent = this.transform;
         Rope.transform.localPosition = Vector3.zero;
         Rope.GetComponent<Rope>().IsActivated = false;
-        //Time.fixedTime
     }
 
     private void OnTriggerEnter2D(Collider2D other)
